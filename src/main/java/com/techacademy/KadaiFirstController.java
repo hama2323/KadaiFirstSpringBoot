@@ -1,8 +1,9 @@
 package com.techacademy;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
+import java.time.format.TextStyle;
+import java.util.Locale;
+import java.time.DayOfWeek;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,12 +18,17 @@ public class KadaiFirstController {
     }
 
     //指定日
-    @GetMapping("disdayofweek")
-    public String disDayOfWeek() {
-        String now = LocalDateTime.now().format( DateTimeFormatter.ofPattern("yyyy:mm:dd") );
-
-        return "現在時刻：" + now;
+    @GetMapping("/dayofweek/{val1}")
+    public String disDayOfWeek(@PathVariable int val1) {
+        int year = 2023;
+        int month = 2;
+        int day = 28;
+        LocalDateTime ldt = LocalDateTime.of( year , month , day , 0, 0);
+        DayOfWeek week = ldt.getDayOfWeek();
+        String dn = week.getDisplayName(TextStyle.FULL, Locale.US);
+        return "曜日：" + dn;
     }
+
     //足し算
     @GetMapping("/plus/{val1}/{val2}")
     public String calcPlus(@PathVariable int val1,@PathVariable int val2) {
