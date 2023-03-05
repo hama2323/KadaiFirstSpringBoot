@@ -19,11 +19,16 @@ public class KadaiFirstController {
 
     //指定日
     @GetMapping("/dayofweek/{val1}")
-    public String disDayOfWeek(@PathVariable int val1) {
-        int year = 2023;
-        int month = 2;
-        int day = 28;
-        LocalDateTime ldt = LocalDateTime.of( year , month , day , 0, 0);
+    public String disDayOfWeek(@PathVariable String val1) {
+        String year = val1.substring(0,4);
+        String month = val1.substring(4,6);
+        String day = val1.substring(6,8);
+
+        int yyyy = Integer.parseInt(year);
+        int mm = Integer.parseInt(month);
+        int dd = Integer.parseInt(day);
+
+        LocalDateTime ldt = LocalDateTime.of( yyyy , mm , dd , 0, 0);
         DayOfWeek week = ldt.getDayOfWeek();
         String dn = week.getDisplayName(TextStyle.FULL, Locale.US);
         return "曜日：" + dn;
